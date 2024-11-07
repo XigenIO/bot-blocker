@@ -15,11 +15,7 @@ For this script to work, you need to have both curl and the web server you are r
 
 ## Installation (nginx)
 
-1. Download the runner.sh script to a preferred working directory on the server, using either:
-
-	cURL:
-
-
+1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "script-url"`
 2. Make the script executable by running `chmod +x runner.sh`
 3. Run the script with `./runner.sh`
 
@@ -45,5 +41,5 @@ For this script to work, you need to have both curl and the web server you are r
 6. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
 
     0 1 * * * /root/runner.sh > /dev/null 2>&1 
-## Install (Apache)
+## Installation (Apache)
 This script has not yet been created for Apache but this will hopefully be done in the future.
