@@ -1,7 +1,7 @@
 #!/bin/bash
 # ------------------------ ADD ANY EXCLUDES TO THIS ARRAY ------------------------ #
 # Syntax should be as follows: ("item1" "item2" "item3")
-excludes=()
+excludes=("Semrush" "SemrushBot" "AhrefsBot")
 
 #Fetch list of bad User-Agent strings
 userAgents=$(curl -s https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/refs/heads/master/_generator_lists/bad-user-agents.list)
@@ -37,4 +37,10 @@ sed "s/'//g" /etc/nginx/bad-bots-tmp.conf > /etc/nginx/bad-bots.conf
 
 rm /etc/nginx/bad-bots-tmp.conf
 
-systemctl restart nginx
+nginx -t >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    systemctl restart nginx
+else
+  echo 'Failed'
+    exit 1;
+fi
