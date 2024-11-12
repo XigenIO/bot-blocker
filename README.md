@@ -21,16 +21,17 @@ For this script to work, you need to have both curl and the web server you are r
 
 4. Edit your nginx server block to include /etc/nginx/bad-bots.conf like the below example:
 
+    ```
     server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	**include /etc/nginx/bad-bots.conf;**
+		listen 80 default_server;
+		listen [::]:80 default_server;
+		include /etc/nginx/bad-bots.conf;
 		root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	access_log /var/log/nginx/access.log json_analytics;	
-	server_name _;
+		index index.html index.htm index.nginx-debian.html;
+		access_log /var/log/nginx/access.log json_analytics;	
+		server_name _;
 	}
-
+	```
 5. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
 
 	```0 1 * * * /root/runner.sh > /dev/null 2>&1 ```
