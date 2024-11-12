@@ -11,11 +11,11 @@ https://github.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/tree/master/_ge
 | generate.sh| This is the script that parses the User Agent list and processes it into an include file for the web server.  This script also contains our excludes, which are User-Agent strings that appear in the mitchellkrogza list that we DON'T want to block. |
 
 ## Pre-Installation Requirements
-For this script to work, you need to have both curl and the web server you are running this for (apache or nginx) installed.
+For this script to work, you need to have both curl and the web server you are running this for (apache or nginx) installed.  The below instructions presume you are running the commands as the root user.
 
 ## Installation (nginx)
 
-1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "script-url"`
+1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "https://raw.githubusercontent.com/XigenIO/bot-blocker/refs/heads/master/nginx/runner.sh"`
 2. Make the script executable by running `chmod +x runner.sh`
 3. Run the script with `./runner.sh`
 
@@ -25,21 +25,49 @@ For this script to work, you need to have both curl and the web server you are r
 	listen 80 default_server;
 	listen [::]:80 default_server;
 	**include /etc/nginx/bad-bots.conf;**
-	root /var/www/html;
+		root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
 	access_log /var/log/nginx/access.log json_analytics;	
 	server_name _;
-
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
 	}
-	
-}
-5. Restart nginx to begin blocking bots by running `systemctl restart nginx`.  Note that this will of course make the web server briefly inaccessible.
-6. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
 
-    0 1 * * * /root/runner.sh > /dev/null 2>&1 
+5. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
+
+	```0 1 * * * /root/runner.sh > /dev/null 2>&1 ```
+
+   
+## Installation (cPanel Apache)
+1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "https://raw.githubusercontent.com/XigenIO/bot-blocker/refs/heads/master/apache/cpanel/runner.sh"`
+2. Make the script executable by running `chmod +x runner.sh`
+3. Run the script with `./runner.sh`
+
+4. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
+
+        0 1 * * * /root/runner.sh > /dev/null 2>&1 
+
 ## Installation (Apache)
-This script has not yet been created for Apache but this will hopefully be done in the future.
+
+1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "https://raw.githubusercontent.com/XigenIO/bot-blocker/refs/heads/master/apache/manual/runner.sh"`
+2. Make the script executable by running `chmod +x runner.sh`
+3. Run the script with `./runner.sh`
+
+4. Edit your Apache server block to include /etc/bad-bots.conf like the below example:
+
+	``` 
+	<VirtualHost *:80>
+
+		ServerName www.example.com
+		ServerAdmin webmaster@localhost
+		DocumentRoot /var/www/html
+
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+		Include /etc/bad-bots.conf
+
+	</VirtualHost>
+	```
+
+5. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
+
+	```0 1 * * * /root/runner.sh > /dev/null 2>&1 ```
