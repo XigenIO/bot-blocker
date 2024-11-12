@@ -39,9 +39,9 @@ printf "<Directory \""\/home\"">
      Require not env bad_bots
   </RequireAll>
 </Directory>
-" > /etc/apache2/conf.d/includes/pre_main_2.conf
+" > /etc/apache2/conf.d/includes/bad-bots.conf
 
-sed -i '/^$/d' /etc/apache2/conf.d/includes/pre_main_2.conf
+sed -i '/^$/d' /etc/apache2/conf.d/includes/bad-bots.conf
 
 /usr/sbin/apachectl configtest >/dev/null 2>&1
 if [ $? -eq 0 ]; then

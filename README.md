@@ -41,8 +41,8 @@ For this script to work, you need to have both curl and the web server you are r
 1. Download the runner.sh script to a preferred working directory on the server using curl: `curl -o runner.sh "https://raw.githubusercontent.com/XigenIO/bot-blocker/refs/heads/master/apache/cpanel/runner.sh"`
 2. Make the script executable by running `chmod +x runner.sh`
 3. Run the script with `./runner.sh`
-
-4. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
+4. In cPanel, navigate to Apache Configuration -> Include Editor -> Pre-Main Include -> (your version), and add the following line: ``` Include /etc/apache2/conf.d/includes/bad-bots.conf ```
+5. Add a new crontab to run the runner.sh script each night.  This will ensure that new excludes are picked up, and new user agents are added as well.  An example cron command is available below:
 
         0 1 * * * /root/runner.sh > /dev/null 2>&1 
 
