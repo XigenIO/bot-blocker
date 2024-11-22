@@ -39,7 +39,7 @@ printf "<Directory \""\/home\"">
      Require not env bad_bots
   </RequireAll>
 </Directory>
-<Directory \""\/var/www\"">
+<Directory ~ \""\/var/www\/.\*\"">
    $userAgentsFormatted
  <RequireAll>
      Require all granted
