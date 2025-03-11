@@ -1,7 +1,7 @@
 #!/bin/bash
 # ------------------------ ADD ANY EXCLUDES TO THIS ARRAY ------------------------ #
 # Syntax should be as follows: ("item1" "item2" "item3")
-excludes=("Semrush" "SemrushBot" "AhrefsBot" "Screaming" "oBot")
+excludes=("Semrush" "SemrushBot" "AhrefsBot" "Screaming" "oBot" "SiteAuditBot")
 
 #Fetch list of bad User-Agent strings
 userAgents=$(curl -s https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/refs/heads/master/_generator_lists/bad-user-agents.list)
