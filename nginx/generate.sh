@@ -3,6 +3,10 @@
 # Syntax should be as follows: ("item1" "item2" "item3")
 excludes=("Semrush" "SemrushBot" "AhrefsBot" "Screaming" "oBot" "SiteAuditBot" "ChatGPT-User" "ClaudeBot" "GPTBot" "allenai.org" "anthropic-ai" "cohere-ai" "openai" "openai.com" "Google-Extended" "PerplexityBot" "Chatbasebot" "OAI-SearchBot" "Googlebot" "Bingbot" "Applebot" "DuckDuckBot")
 
+# ------------------------ ADD ANY MANUAL INCLUDES TO THIS ARRAY ------------------------ #
+# Syntax should be as follows: ("item1" "item2" "item3").  Conflicts with items from the userAgents list below are fine
+includes=("Sogou")
+
 #Fetch list of bad User-Agent strings
 userAgents=$(curl -s https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/refs/heads/master/_generator_lists/bad-user-agents.list)
 
@@ -13,6 +17,9 @@ if [ ${#userAgents} = 0 ]; then
 fi
 
 userAgents=$(echo "$userAgents" | grep -v '\\' | grep -v '\/')
+
+# Add manually specified User-Agents
+userAgents="$userAgents ${includes[*]}"
 
 if [ ${#excludes} != 0 ]; then
   for i in "${excludes[@]}"
