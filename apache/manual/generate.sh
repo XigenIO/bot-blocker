@@ -5,7 +5,7 @@ excludes=("Semrush" "SemrushBot" "AhrefsBot" "Screaming" "oBot" "SiteAuditBot" "
 
 # ------------------------ ADD ANY MANUAL INCLUDES TO THIS ARRAY ------------------------ #
 # Syntax should be as follows: ("item1" "item2" "item3").  Conflicts with items from the userAgents list below are fine
-includes=("Sogou")
+includes=("Sogou" "CompdexBot")
 
 #Fetch list of bad User-Agent strings
 userAgents=$(curl -s https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/refs/heads/master/_generator_lists/bad-user-agents.list)
